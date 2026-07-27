@@ -81,7 +81,8 @@ this skill must handle:
    `—`). The script's auto-title picks the *first* H1 (`Meeting Minutes`), which
    is wrong. **Always pass `--title`** using the **second** H1 — the one
    starting with `Meeting Notes`. Read the file and extract that heading first.
-2. **Screenshots.** Images are referenced as URL-encoded relative paths like
+2. **Screenshots.** If you have images attached in meeting minutes, they should be 
+    referenced as URL-encoded relative paths like
    `![Screenshot at 00:12](images/<stem>/screenshot_01.jpg)`. The script
    resolves these against the markdown file's own directory and uploads them as
    attachments automatically — no preprocessing needed.
