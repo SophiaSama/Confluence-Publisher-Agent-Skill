@@ -3,7 +3,7 @@ name: publish-meeting-notes
 description: |
   Publish generated meeting minutes from this project to Confluence. Use when
   the user wants to publish, post, upload, or push a generated meeting-notes /
-  minutes markdown file (artifacts/meeting_minutes/*.minutes.md) to a Confluence
+  minutes markdown file (<your-meeting-minutes-location>*.minutes.md) to a Confluence
   page, including its captured screenshots.
   This skill only supports the storage/XHTML representation (not ADF) for v1 REST API on Confluence Cloud.
   This skill does not support ADF that is required by Confluence Cloud v2 REST API.
@@ -21,7 +21,7 @@ allowed-tools:
 ## What this skill does
 
 Publishes a generated meeting-minutes markdown file from
-`artifacts/meeting_minutes/` to a Confluence page and uploads its referenced
+`<your-meeting-minutes-location>` to a Confluence page and uploads its referenced
 screenshots as page attachments. It wraps
 `.github/skills/publish-meeting-notes/scripts/publish_confluence_page.py`.
 
@@ -72,7 +72,7 @@ For a URL like
 
 ## Meeting-notes specifics
 
-Generated minutes (`artifacts/meeting_minutes/<name>.minutes.md`) have two quirks
+Generated minutes (`<your-meeting-minutes-location><name>.minutes.md`) have two quirks
 this skill must handle:
 
 1. **The title.** The file begins with a `# Meeting Minutes` metadata block
@@ -92,7 +92,7 @@ this skill must handle:
 
 ```bash
 # List available minutes
-ls artifacts/meeting_minutes/*.minutes.md
+ls <your-meeting-minutes-location>*.minutes.md
 ```
 
 Read the chosen file and grab the real title from the second H1 — the line
@@ -106,7 +106,7 @@ whichever is missing:
 
 | Info | Required? | Notes |
 |------|-----------|-------|
-| Minutes file path | Yes | `artifacts/meeting_minutes/<name>.minutes.md` |
+| Minutes file path | Yes | `<your-meeting-minutes-location><name>.minutes.md` |
 | `--title "Meeting Notes: ..."` | Yes | From the second H1 in the file |
 | `--env-file .env` | Yes | Always pass it explicitly |
 | **Create subpage (default):** `--space SPACE_KEY` | Yes | From the URL `/spaces/<KEY>` |
@@ -124,7 +124,7 @@ Dry-run the **subpage create** (the default case — note `--parent-id`, not `--
 
 ```bash
 python .github/skills/publish-meeting-notes/scripts/publish_confluence_page.py \
-  "artifacts/meeting_minutes/2026-06-05 15-04-43_20260605_161809.minutes.md" \
+  "<your-meeting-minutes-location>2026-06-05 15-04-43_20260605_161809.minutes.md" \
   --space SPACE1696 \
   --parent-id 4232096702 \
   --title "Meeting Notes: BLE/UWB Authentication and Transaction Logic Review" \
@@ -141,7 +141,7 @@ user wanted a subpage, **stop** — you used `--id` instead of `--parent-id`.
 ```bash
 # DEFAULT: create a subpage under the page the user named ("under page X")
 python .github/skills/publish-meeting-notes/scripts/publish_confluence_page.py \
-  "artifacts/meeting_minutes/2026-06-05 15-04-43_20260605_161809.minutes.md" \
+  "<your-meeting-minutes-location>2026-06-05 15-04-43_20260605_161809.minutes.md" \
   --space SPACE1696 \
   --parent-id 4232096702 \
   --title "Meeting Notes: BLE/UWB Authentication and Transaction Logic Review" \
@@ -149,7 +149,7 @@ python .github/skills/publish-meeting-notes/scripts/publish_confluence_page.py \
 
 # ONLY when explicitly told to update/replace that exact page (overwrites it!)
 python .github/skills/publish-meeting-notes/scripts/publish_confluence_page.py \
-  "artifacts/meeting_minutes/2026-06-05 15-04-43_20260605_161809.minutes.md" \
+  "<your-meeting-minutes-location>2026-06-05 15-04-43_20260605_161809.minutes.md" \
   --id 780369923 \
   --title "Meeting Notes: BLE/UWB Authentication and Transaction Logic Review" \
   --env-file .env
